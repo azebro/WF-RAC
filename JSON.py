@@ -7,7 +7,7 @@ Created on Fri Jul  1 11:35:15 2022
 import time, requests
 import AirconStatCoder
 import PrintAirconStat
-import Config
+import Config_init as Config
 
 ipWFRAC = Config.ipWFRAC
 deviceID = Config.deviceID
@@ -102,14 +102,16 @@ airconId = DeviceInfo["contents"]["airconId"]
 ACSstring = getAirconStat()["contents"]["airconStat"]
 ACS = AirconStatCoder.StringtoStat(ACSstring)
 print(ACSstring+"\n")
+
 PrintAirconStat.PrintAirconStat(ACS)
-ACS.airFlow = 4
+ACS.operation = 1
+
 
 ACSstring = AirconStatCoder.toBase64(ACS)
 print(ACSstring+"\n")
 
-# ACSstring = setAirconStat(ACSstring)["contents"]["airconStat"]
-
-ACS = AirconStatCoder.StringtoStat(ACSstring)
+ACSstring = setAirconStat(ACSstring)
 print(ACSstring+"\n")
+
+ACS = AirconStatCoder.StringtoStat(ACSstring["contents"]["airconStat"])
 PrintAirconStat.PrintAirconStat(ACS)
